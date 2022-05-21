@@ -1,11 +1,19 @@
 @import "~styles/fonts";
 
 .App {
+
+  min-height: 100vh;
+  min-width: 100vw;
+
+  background-color: #F8F8F8;
+
+  padding-bottom: 128px;
+
   text-align: center;
 }
 
 .showcase {
-  @include main-font();
+  @include main-font;
   
   background-color: #F8F8F8;
 

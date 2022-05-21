@@ -1,0 +1,79 @@
+@import "~styles/fonts";
+
+.button {
+
+  &-normal {
+    @include main-font;
+
+    width: fit-content;
+
+    background: #A4A4A4;
+
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 4px;
+
+    text-transform: uppercase;
+
+    border: none;
+
+    padding: 4px 6px 4px 6px;
+    cursor: pointer;
+
+    transition: all .1s;
+  }
+  &-normal:hover {
+    box-shadow: 0 4px 4px 1px rgba(0, 0, 0, 0.25);
+    background: #b2b2b2;
+  }
+  &-wide {
+    @include main-font;
+
+    width: fit-content;
+
+    background: #00AEE0;
+
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 4px;
+
+    color: white;
+    font-weight: bold;
+    text-transform: uppercase;
+
+    border: none;
+
+    padding: 4px 32px 4px 32px;
+    cursor: pointer;
+
+    transition: all .1s;
+  }
+  &-wide:hover {
+    box-shadow: 0 4px 4px 1px rgba(0, 0, 0, 0.25);
+    background: #009cc7;
+  }
+  &-fit-width {
+    @include main-font;
+
+    width: 100%;
+
+    background: #00AEE0;
+
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 4px;
+
+    color: white;
+    font-weight: bold;
+    text-transform: uppercase;
+
+    border: none;
+
+    padding: 4px 32px 4px 32px;
+    cursor: pointer;
+
+    transition: all .1s;
+  }
+  &-fit-width:hover {
+    box-shadow: 0 4px 4px 1px rgba(0, 0, 0, 0.25);
+    background: #009cc7;
+  }
+
+}

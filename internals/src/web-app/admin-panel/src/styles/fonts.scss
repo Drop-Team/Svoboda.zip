@@ -1,11 +1,10 @@
 @font-face {
   font-family: "Inter";
-  src: url("~fonts/Inter.ttf");
+  src: url("./../fonts/Inter.ttf");
 }
 
 @mixin main-font {
   font-family: 'Inter';
   font-style: normal;
-  line-height: 19px;
   font-size: 16px;
 }

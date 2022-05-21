@@ -1,0 +1,19 @@
+@import "~styles/styles";
+@import "~styles/fonts";
+
+.logo-text {
+
+  @include main-font;
+
+  width: fit-content;
+
+  font-size: 32px;
+  font-weight: bold;
+  text-transform: uppercase;
+
+  cursor: default;
+
+  .blue {
+    color: #00AEE0;
+  }
+}
