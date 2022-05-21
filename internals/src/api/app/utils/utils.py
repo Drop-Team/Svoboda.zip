@@ -1,6 +1,7 @@
 import subprocess
 import sys
-import json
+import time
+from multiprocessing import Process
 from os import path
 import shutil
 
@@ -20,13 +21,15 @@ class Utils:
         elif not path.exists(self.wiki_dir):
             raise DirectoryConsistencyError(self.wiki_dir)
 
-    def get_zipps_list(self) -> list[dict]:
+
+    def get_zipps_list(self):
         zipp_list = []
         # Get only folders
         for name in os.listdir(self.zipp_dir):
             if path.isdir(path.join(self.zipp_dir, name)):
                 zipp_list.append(self.get_zipp_data(name))
         return zipp_list
+
 
     def get_zipp_data(self, zipp_directory) -> dict:
         with open(path.join(self.zipp_dir, zipp_directory, "manifest.json")) as f:
@@ -42,6 +45,7 @@ class Utils:
         }
         return result
 
+
     def start_zipp(self, zipp_directory):
         # Check if zipp package exists
         user_zipp_dir = path.join(self.zipp_dir, zipp_directory)
@@ -56,6 +60,7 @@ class Utils:
         else:
             raise NoSuchZippError(zipp_directory)
 
+
     def delete_zipp(self, zipp_directory):
         # Check if zipp package exists
         user_zipp_dir = path.join(self.zipp_dir, zipp_directory)
@@ -63,6 +68,7 @@ class Utils:
             shutil.rmtree(user_zipp_dir)
         else:
             raise NoSuchZippError(zipp_directory)
+
 
     def add_zipp(self, zipp_directory):
         # Check if this zipp package already exists
@@ -72,3 +78,16 @@ class Utils:
             pass
         else:
             raise ZippConflictError(zipp_directory)
+
+
+    def restart_app(self):
+        run_path = path.join(os.getcwd(), 'run.py')
+        try:
+            p1 = Process(target=subprocess.call, args=([sys.executable, run_path],))
+            p1.start()
+            time.sleep(2)
+            exit()
+
+        except Exception as e:
+            raise CorruptedFileError('run.py', e)
+
