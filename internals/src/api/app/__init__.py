@@ -4,6 +4,8 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 
 from .utils.utils import Utils
+from .utils.func import get_config_data
+
 
 web_app = FastAPI()
 
@@ -23,8 +25,10 @@ def start():
 
     web_app.include_router(zipps.router)
 
+    config = get_config_data()
+
     uvicorn.run(
         "app:web_app",
-        host="0.0.0.0", port=8000,
+        host=config['host'], port=config['port'],
         forwarded_allow_ips="*"
     )
