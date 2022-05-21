@@ -1,4 +1,7 @@
 import subprocess
+import sys
+import time
+from multiprocessing import Process
 from os import path
 import shutil
 
@@ -75,3 +78,16 @@ class Utils:
             pass
         else:
             raise ZippConflictError(zipp_directory)
+
+
+    def restart_app(self):
+        run_path = path.join(os.getcwd(), 'run.py')
+        try:
+            p1 = Process(target=subprocess.call, args=([sys.executable, run_path],))
+            p1.start()
+            time.sleep(2)
+            exit()
+
+        except Exception as e:
+            raise CorruptedFileError('run.py', e)
+
