@@ -1,0 +1,18 @@
+<component name="InspectionProjectProfileManager">
+  <profile version="1.0">
+    <option name="myName" value="Project Default" />
+    <inspection_tool class="PyUnresolvedReferencesInspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoredIdentifiers">
+        <list>
+          <option value="cv2.detail" />
+          <option value="Desktop.TenderHack.telebot.*" />
+          <option value="map.__getitem__" />
+          <option value="map.__add__" />
+          <option value="list.__pow__" />
+          <option value="gui_components.*" />
+          <option value="filter.__getitem__" />
+        </list>
+      </option>
+    </inspection_tool>
+  </profile>
+</component>
