@@ -16,3 +16,9 @@ def get_zipps(request: Request):
 @router.post("/{zipp_directory_name}/start")
 def start_zipp(request: Request, zipp_directory_name):
     utils.Utils().start_zipp(zipp_directory_name)
+    return {"success": "ok"}
+
+
+@router.delete("/{zipp_directory_name}")
+def delete_zipp(request: Request, zipp_directory_name):
+    utils.Utils().delete_zipp(zipp_directory_name)
