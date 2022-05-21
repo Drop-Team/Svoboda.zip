@@ -1,0 +1,7 @@
+{
+  "version": "1.0.0",
+  "name": "Wikipedia",
+  "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce a suscipit enim. Pellentesque ligula urna, rutrum fermentum ex ac, vulputate viverra quam. In eu malesuada nisi, sed sollicitudin nibh.",
+  "icon": "icon.png",
+  "type": "executable"
+}
