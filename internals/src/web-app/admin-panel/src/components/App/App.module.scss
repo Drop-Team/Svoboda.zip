@@ -1,0 +1,18 @@
+@import "~styles/fonts";
+
+.App {
+  text-align: center;
+}
+
+.showcase {
+  @include main-font();
+  
+  background-color: #F8F8F8;
+
+  width: 100vw;
+  height: 100vh;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
