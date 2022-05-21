@@ -1,8 +1,13 @@
 from fastapi import APIRouter, Request
+import urllib
 
 from ..utils import utils
 
 router = APIRouter(prefix="/zipps")
+
+
+def get_url_safe(url):
+    return urllib.parse.quote(url, safe='/:?=&')
 
 
 @router.get("/")
@@ -10,6 +15,8 @@ def get_zipps(request: Request):
     zipps_data = utils.Utils().get_zipps_list()
     for zipp_data in zipps_data:
         zipp_data["icon"] = str(request.base_url) + "zipps_static/" + zipp_data["icon"]
+        zipp_data["start"] = get_url_safe(str(request.base_url) + "zipps/" + zipp_data["directory_name"] + "/start")
+        zipp_data["delete"] = get_url_safe(str(request.base_url) + "zipps/" + zipp_data["directory_name"])
     return {"zipps": zipps_data}
 
 
