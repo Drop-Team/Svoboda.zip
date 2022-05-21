@@ -7,7 +7,8 @@ interface AppProps {
 }
 
 export const App: React.FunctionComponent<AppProps> = (props) => {
-  return (<>
+  return (<div className={styles["App"]}>
     <Dashboard />
-  </>);
+
+  </div>);
 }

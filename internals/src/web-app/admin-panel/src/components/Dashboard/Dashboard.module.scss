@@ -1,9 +1,60 @@
 @import "~styles/styles";
+@import "~styles/fonts";
 
 .dashboard {
-  min-height: calc(100vh - 128px);
 
-  background-color: #F8F8F8;
+  min-height: 100%;
+  max-width: 1156px;
+  margin: 0 auto;
 
-  padding: 128px 128px 0 128px;
+  padding-top: 64px;
+}
+
+.header {
+  display: grid;
+
+  grid-template-columns: 25% 75%;
+}
+.menu {
+
+  display: flex;
+
+  gap: 8px;
+  justify-content: end;
+  align-items: end;
+
+  .button {
+
+    @include main-font;
+
+    height: fit-content;
+
+    background: transparent;
+    border: none;
+
+    text-transform: uppercase;
+    font-size: 24px;
+
+    cursor: pointer;
+
+    padding: 0;
+  }
+}
+
+.content {
+  margin-top: 32px;
+  width: 100%;
+}
+
+.zipp-cards-list {
+
+  display: grid;
+
+  margin-top: 32px;
+
+  width: 100%;
+
+  grid-template-columns: auto auto;
+  justify-content: space-between;
+  grid-row-gap: 32px;
 }

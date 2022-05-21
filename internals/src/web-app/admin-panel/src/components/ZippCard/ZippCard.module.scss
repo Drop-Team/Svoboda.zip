@@ -1,4 +1,9 @@
+@import "~styles/fonts";
+
 .zipp-card {
+
+  @include main-font;
+
   box-sizing: border-box;
   width: 552px;
   height: 216px;
@@ -19,11 +24,11 @@
     "P P D D D D D D D"
     "C C C C C I I I I";
 
+  transition: all .1s;
+
   .picture-container {
     grid-area: P;
     place-self: center;
-
-    background-color: gray;
 
     display: flex;
     align-items: center;
@@ -32,6 +37,11 @@
     margin: 0px 8px 8px 8px;
     width: 75%;
     height: 75%;
+
+    .img {
+      width: 100%;
+
+    }
   }
 
   .header {
@@ -65,10 +75,16 @@
   .controls {
     grid-area: C;
     place-self: center;
+
+    display: flex;
+    gap: 8px;
   }
 
   .info {
     grid-area: I;
     place-self: center;
   }
+}
+.zipp-card:hover {
+  box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.25);
 }

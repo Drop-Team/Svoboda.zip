@@ -6,6 +6,7 @@
       "@components/*": ["components/*"],
       "@styles/*": ["styles/*"],
       "@fonts/*": ["fonts/*"],
+      "@hooks/*": ["hooks/*"],
     },
     "lib": [
       "dom",
