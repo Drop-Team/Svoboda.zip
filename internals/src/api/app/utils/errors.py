@@ -1,5 +1,3 @@
-
-
 class DirectoryConsistencyError(Exception):
     def __init__(self, data):
         self.data = data
@@ -8,7 +6,6 @@ class DirectoryConsistencyError(Exception):
 
     def __str__(self):
         return f'{self.message}{self.data}'
-
 
 
 class FileConsistencyError(Exception):
@@ -21,7 +18,6 @@ class FileConsistencyError(Exception):
         return f'{self.message}{self.data}'
 
 
-
 class NoSuchZippError(Exception):
     def __init__(self, data):
         self.data = data
@@ -32,7 +28,6 @@ class NoSuchZippError(Exception):
         return f'<{self.data}>{self.message}'
 
 
-
 class CorruptedZippError(Exception):
     def __init__(self, data):
         self.data = data
@@ -41,7 +36,6 @@ class CorruptedZippError(Exception):
 
     def __str__(self):
         return f'{self.message}{self.data}'
-
 
 
 class ZippConflictError(Exception):
