@@ -1,0 +1,7 @@
+@import "~styles/styles";
+
+.button {
+  @include reset-button;
+  
+  color: red;
+}
