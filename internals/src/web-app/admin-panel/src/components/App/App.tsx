@@ -1,11 +1,13 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.scss';
+import { Dashboard } from "@components/Dashboard";
+import * as React from 'react';
+import styles from './App.module.scss';
 
-function App() {
-  return (
-    <h1> Hello World! </h1>
-  );
+interface AppProps {
+
 }
 
-export default App;
+export const App: React.FunctionComponent<AppProps> = (props) => {
+  return (<>
+    <Dashboard />
+  </>);
+}

@@ -1,0 +1,74 @@
+.zipp-card {
+  box-sizing: border-box;
+  width: 552px;
+  height: 216px;
+
+  background: #E9E9E9;
+  box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.25);
+  border-radius: 11px;
+
+  padding: 32px 48px;
+
+  display: grid;
+  grid-template-columns: repeat(9, 1fr);
+  grid-template-rows: 1fr 4fr 2fr;
+  gap: 8px;
+
+  grid-template-areas:
+    "P P H H H H T T T"
+    "P P D D D D D D D"
+    "C C C C C I I I I";
+
+  .picture-container {
+    grid-area: P;
+    place-self: center;
+
+    background-color: gray;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin: 0px 8px 8px 8px;
+    width: 75%;
+    height: 75%;
+  }
+
+  .header {
+    grid-area: H;
+    place-self: center left;
+
+    .name { 
+      font-weight: 500;
+      text-transform: uppercase;
+      margin-right: 8px;
+    }
+
+    .version {
+      font-weight: 400;
+      color: #707070;
+    }
+  }
+
+  .type {
+    grid-area: T;
+
+    text-align: end;
+    place-self: center;
+  }
+
+  .description {
+    grid-area: D;
+    font-weight: 300;
+  }
+
+  .controls {
+    grid-area: C;
+    place-self: center;
+  }
+
+  .info {
+    grid-area: I;
+    place-self: center;
+  }
+}
