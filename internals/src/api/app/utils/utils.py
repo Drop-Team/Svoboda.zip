@@ -2,6 +2,7 @@ import subprocess
 import sys
 import json
 from os import path
+import shutil
 
 from .errors import *
 from .func import *
@@ -59,7 +60,7 @@ class Utils:
         # Check if zipp package exists
         user_zipp_dir = path.join(self.zipp_dir, zipp_directory)
         if path.exists(user_zipp_dir):
-            os.remove(user_zipp_dir)
+            shutil.rmtree(user_zipp_dir)
         else:
             raise NoSuchZippError(zipp_directory)
 
