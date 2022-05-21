@@ -1,6 +1,12 @@
-class DirectoryConsistencyError(Exception):
+class ZippError(Exception):
+    status_code = 503
+    message = ""
+
+
+class DirectoryConsistencyError(ZippError):
     def __init__(self, data):
         self.data = data
+        self.status_code = 503
         self.message = "Your directory consistency were corrupted! This error occurs in: "
         super().__init__(self.message)
 
@@ -8,9 +14,10 @@ class DirectoryConsistencyError(Exception):
         return f'{self.message}{self.data}'
 
 
-class FileConsistencyError(Exception):
+class FileConsistencyError(ZippError):
     def __init__(self, data):
         self.data = data
+        self.status_code = 503
         self.message = "Your file consistency were corrupted! This error occurs in: "
         super().__init__(self.message)
 
@@ -18,30 +25,33 @@ class FileConsistencyError(Exception):
         return f'{self.message}{self.data}'
 
 
-class NoSuchZippError(Exception):
+class NoSuchZippError(ZippError):
     def __init__(self, data):
         self.data = data
-        self.message = " zipp package is not installed! "
+        self.status_code = 404
+        self.message = "Zipp package is not installed! "
         super().__init__(self.message)
 
     def __str__(self):
         return f'<{self.data}>{self.message}'
 
 
-class CorruptedZippError(Exception):
+class CorruptedZippError(ZippError):
     def __init__(self, data):
         self.data = data
-        self.message = "This zipp package is not corrupted! This error occurs in: "
+        self.status_code = 503
+        self.message = "This zipp package is corrupted! This error occurs in: "
         super().__init__(self.message)
 
     def __str__(self):
         return f'{self.message}{self.data}'
 
 
-class ZippConflictError(Exception):
+class ZippConflictError(ZippError):
     def __init__(self, data):
         self.data = data
-        self.message = " zipp package conflicting with another one!"
+        self.status_code = 503
+        self.message = "Zipp package conflicting with another one!"
         super().__init__(self.message)
 
     def __str__(self):

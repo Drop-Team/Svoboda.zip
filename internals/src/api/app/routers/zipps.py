@@ -1,7 +1,8 @@
-from fastapi import APIRouter, Request
+from fastapi import APIRouter, Request, HTTPException
 import urllib
 
 from ..utils import utils
+from ..utils import errors
 
 router = APIRouter(prefix="/zipps")
 
@@ -22,10 +23,17 @@ def get_zipps(request: Request):
 
 @router.post("/{zipp_directory_name}/start")
 def start_zipp(request: Request, zipp_directory_name):
-    utils.Utils().start_zipp(zipp_directory_name)
-    return {"success": "ok"}
+    try:
+        utils.Utils().start_zipp(zipp_directory_name)
+        return "success"
+    except errors.ZippError as e:
+        raise HTTPException(status_code=e.status_code, detail=e.message)
 
 
 @router.delete("/{zipp_directory_name}")
 def delete_zipp(request: Request, zipp_directory_name):
-    utils.Utils().delete_zipp(zipp_directory_name)
+    try:
+        utils.Utils().delete_zipp(zipp_directory_name)
+        return "success"
+    except errors.ZippError as e:
+        raise HTTPException(status_code=e.status_code, detail=e.message)
