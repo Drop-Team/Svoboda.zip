@@ -30,6 +30,14 @@ def start_zipp(request: Request, zipp_directory_name):
         raise HTTPException(status_code=e.status_code, detail=e.message)
 
 
+@router.post("/{zipp_directory_name}/help")
+def get_zipp_md(request: Request, zipp_directory_name):
+    try:
+        return utils.Utils().get_zipp_markdown(zipp_directory_name)
+    except errors.ZippError as e:
+        raise HTTPException(status_code=e.status_code, detail=e.message)
+
+
 @router.delete("/{zipp_directory_name}")
 def delete_zipp(request: Request, zipp_directory_name):
     try:
