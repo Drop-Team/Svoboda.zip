@@ -1,5 +1,6 @@
 import { SvobodaZipLogo } from "@components/SvobodaZipLogo";
 import { TextField } from "@components/TextField";
+import { UploadDropZone } from "@components/UploadDropZone";
 import { ZippCard } from "@components/ZippCard";
 import useFetch from "@hooks/useFetch";
 
@@ -74,6 +75,8 @@ export const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
 
     <div className={styles["content"]}>
       <TextField placeholder="Hello" type="wide"/>
+
+      <UploadDropZone/>
 
       <div className={styles["zipp-cards-list"]}>
         { zippCards }
