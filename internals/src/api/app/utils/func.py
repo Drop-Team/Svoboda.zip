@@ -1,5 +1,5 @@
-import os
 import json
+import os
 
 
 def get_root_dir():
@@ -19,7 +19,6 @@ def get_human_readable_size(directory_path):
 
         return total_size
 
-
     def human_readable_size(size, decimal_places=2):
         for unit in ['B', 'KB', 'MB', 'GB']:
             if size < 1024.0 or unit == 'GB':
@@ -33,7 +32,7 @@ def get_human_readable_size(directory_path):
 
 def get_config_data():
     root = get_root_dir()
-    config = os.path.join(os.path.abspath(os.path.join(root, "../..")), 'config.json')
+    config = os.path.join(root, 'config.json')
 
     # Open JSON file
     f = open(config)

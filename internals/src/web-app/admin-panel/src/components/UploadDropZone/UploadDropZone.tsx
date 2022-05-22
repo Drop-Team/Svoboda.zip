@@ -5,13 +5,18 @@ import { useDropzone } from 'react-dropzone'
 import { useFileUpload } from '@hooks/useFileUpload';
 
 interface UploadDropZoneProps {
-
+  onUploadSuccess?: CallableFunction;
 }
 
 export const UploadDropZone: React.FunctionComponent<UploadDropZoneProps> = (props) => {
   const onFileUpload = useFileUpload();
 
-  const {getRootProps, getInputProps, isDragActive} = useDropzone({ onDrop: onFileUpload })
+  const onDrop = async (acceptedFiles : File[]) => {
+    await onFileUpload(acceptedFiles);
+    props.onUploadSuccess?.();
+  }
+
+  const {getRootProps, getInputProps, isDragActive} = useDropzone({ onDrop })
 
   return <div 
     className={styles["upload-drop-zone"]}

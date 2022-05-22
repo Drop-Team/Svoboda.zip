@@ -1,16 +1,22 @@
+import os
+
 import uvicorn
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
-
-from .utils.utils import Utils
-from .utils.func import get_config_data
 
 
 web_app = FastAPI()
 
 
 def start():
+    os.chdir("../../..")
+
+    from .utils.utils import Utils
+    from .utils.func import get_config_data, get_root_dir
+
+    os.chdir(get_root_dir())
+
     web_app.mount("/zipps_static", StaticFiles(directory=Utils().zipp_dir), name="zipps")
 
     web_app.add_middleware(

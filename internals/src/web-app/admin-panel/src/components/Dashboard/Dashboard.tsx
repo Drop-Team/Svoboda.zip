@@ -2,18 +2,20 @@ import { SvobodaZipLogo } from "@components/SvobodaZipLogo";
 import { TextField } from "@components/TextField";
 import { UploadDropZone } from "@components/UploadDropZone";
 import { ZippCard } from "@components/ZippCard";
-import useFetch from "@hooks/useFetch";
+import { useFetchZipps } from "@hooks/useFetchZipps";
+import { Zipp, Zipps } from "@typings/index";
 
 import React, {useCallback, useEffect, useReducer, useState} from "react";
 import styles from './Dashboard.module.scss';
-import {HelpPage} from "@components/HelpPage";
+import { HelpPage } from "@components/HelpPage";
 
+interface DashboardProps {
 
-interface DashboardProps {}
+}
 
 export const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
-
   const [zipps, updateZipps] = useFetch<Zipps>("http://10.91.10.20:8000/zipps/");
+  
   const [helpPage, setHelpPage] = useState<HelpPageType>({
     opened: false,
     linkToContent: null,
@@ -21,7 +23,7 @@ export const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
   });
 
   const zippCards:JSX.Element[] = [];
-  if (zipps !== null) {
+  if (zipps !== undefined) {
 
     zipps.zipps.forEach((item, index) => {
 
@@ -105,31 +107,13 @@ export const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
     <div className={styles["content"]}>
       <TextField placeholder="Hello" type="wide"/>
 
-      <UploadDropZone/>
+      <UploadDropZone onUploadSuccess={ updateZipps }/>
 
       <div className={styles["zipp-cards-list"]}>
         { zippCards }
       </div>
     </div>
   </div>;
-}
-
-type Zipps = {
-  zipps: Zipp[],
-}
-
-type Zipp = {
-  name: string,
-  description: string,
-  type: string,
-  version: string,
-  icon: string,
-  size: string,
-  directory_name: string,
-
-  start: string,
-  delete: string,
-  help: string,
 }
 
 type HelpPageType = {
