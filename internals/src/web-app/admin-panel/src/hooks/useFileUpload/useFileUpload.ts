@@ -5,7 +5,6 @@ export const useFileUpload = () => {
     const formData = new FormData();
     formData.append("file", acceptedFiles[0]);
 
-    fetch('http://10.91.10.20:8000/zipps', { method: 'POST', body: formData })
-      .then(res => res.json())
+    return fetch('http://10.91.10.20:8000/zipps', { method: 'POST', body: formData })
   }, [])
 }
