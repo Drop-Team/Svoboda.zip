@@ -94,7 +94,6 @@ class Utils:
             pass
 
 
-
     def delete_zipp(self, zipp_dir):
         # Check if zipp package exists
         user_zipp_dir = path.join(self.zipp_dir, zipp_dir)
