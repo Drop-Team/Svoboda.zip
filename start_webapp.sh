@@ -2,4 +2,4 @@
 
 cd internals/src/web-app
 source "env/Scripts/activate.bat"
-npm
+npm run start
