@@ -1,0 +1,22 @@
+@import "~styles/fonts";
+
+.upload-drop-zone {
+  @include main-font;
+
+  margin-top: 32px;
+  background: #E9E9E9;
+  border: 3px dashed #A6A6A6;
+  border-radius: 11px;
+  cursor: pointer;
+
+  padding: 24px;
+
+  font-weight: 300;
+
+  button {
+    padding-top: 8px;
+    padding-bottom: 8px;
+
+    margin-right: 24px;
+  }
+}
