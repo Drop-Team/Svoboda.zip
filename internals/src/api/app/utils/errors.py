@@ -47,10 +47,10 @@ class CorruptedZippError(ZippError):
         return f'{self.message}{self.data}'
 
 
-
 class CorruptedFileError(ZippError):
     def __init__(self, file_name, data):
         self.data = data
+        self.status_code = 503
         self.file_name = file_name
         self.message = " is corrupted! Can't start due to: "
         super().__init__(self.message)

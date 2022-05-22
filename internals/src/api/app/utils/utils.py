@@ -1,3 +1,4 @@
+import io
 import subprocess
 import sys
 import time
@@ -24,15 +25,16 @@ class Utils:
         elif not path.exists(self.wiki_dir):
             raise DirectoryConsistencyError(self.wiki_dir)
 
-
     def get_zipps_list(self):
         zipp_list = []
         # Get only folders
         for name in os.listdir(self.zipp_dir):
             if path.isdir(path.join(self.zipp_dir, name)):
-                zipp_list.append(self.get_zipp_data(name))
+                try:
+                    zipp_list.append(self.get_zipp_data(name))
+                except Exception as e:
+                    pass
         return zipp_list
-
 
     def get_zipp_data(self, zipp_dir) -> dict:
         with open(path.join(self.zipp_dir, zipp_dir, "manifest.json")) as f:
@@ -48,21 +50,15 @@ class Utils:
         }
         return result
 
-
     def get_zipp_markdown(self, zipp_dir):
         md_path = path.join(self.zipp_dir, zipp_dir, "help.md")
-        md_html = ''
         # Convert md to html
         try:
-            markdown.markdownFromFile(
-                input=md_path,
-                output=md_html,
-                encoding='utf8',
-            )
+            with open(md_path, encoding="utf8") as f:
+                md_html = markdown.markdown(f.read())
             return md_html
         except Exception:
             raise FileConsistencyError(md_path)
-
 
     def start_zipp(self, zipp_dir):
         # Check if zipp package exists
@@ -78,7 +74,6 @@ class Utils:
         else:
             raise NoSuchZippError(zipp_dir)
 
-
     def delete_zipp(self, zipp_dir):
         # Check if zipp package exists
         user_zipp_dir = path.join(self.zipp_dir, zipp_dir)
@@ -87,20 +82,13 @@ class Utils:
         else:
             raise NoSuchZippError(zipp_dir)
 
-
-    def add_local_zipp(self, zipp_path):
-        zipp_name = (zipp_path.split('/'))[-1].split('.')[0]
-        user_zip_list = self.get_zipps_list()
-
-        # Check if this zipp package already exists
-        if zipp_name not in user_zip_list:
-            # Extract to zipp directory
-            with zipfile.ZipFile(zipp_path, 'r') as zip_ref:
+    def add_local_zipp(self, zipp_bytes: bytes):
+        try:
+            with zipfile.ZipFile(io.BytesIO(zipp_bytes), 'r') as zip_ref:
                 zip_ref.extractall(self.zipp_dir)
-            pass
-        else:
-            raise ZippConflictError(zipp_name)
-
+            # pass
+        except Exception as e:
+            raise ZippConflictError("[Zipp archive]")
 
     def add_net_zipp(self, zipp_name):
 
@@ -108,7 +96,6 @@ class Utils:
         # Then, add it as local one
 
         pass
-
 
     def restart_app(self):
         run_path = path.join(os.getcwd(), 'run.py')
