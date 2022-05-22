@@ -12,3 +12,27 @@
 
 
 * `WIKI` - Файлы содержащие информацию. Открываются через предустановленное приложение `Wikipedia`.
+
+## Запуск:
+Для запуска основного веб приложения, вам необходимо запустить 
+соответствующее виртуальное окружение при помощи следующих команд:
+
+* API:
+
+`cd internals/src/api`
+
+`env\Scripts\activate.bat`
+
+`python run.py`
+
+* INTERFACE:
+
+`cd internals/src/web-app`
+
+`env\Scripts\activate.bat`
+
+`cd admin-panel`
+
+`npm run start`
+
+
