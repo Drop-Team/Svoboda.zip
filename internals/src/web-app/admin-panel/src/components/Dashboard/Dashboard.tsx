@@ -8,6 +8,7 @@ import { Zipp, Zipps } from "@typings/index";
 import React, {useCallback, useEffect, useReducer, useState} from "react";
 import styles from './Dashboard.module.scss';
 import { HelpPage } from "@components/HelpPage";
+import useFetch from "@hooks/useFetch";
 
 interface DashboardProps {
 
@@ -23,8 +24,7 @@ export const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
   });
 
   const zippCards:JSX.Element[] = [];
-  if (zipps !== undefined) {
-
+  if (zipps) {
     zipps.zipps.forEach((item, index) => {
 
       const startCallback = () => {

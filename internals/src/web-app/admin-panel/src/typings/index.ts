@@ -13,4 +13,5 @@ export type Zipp = {
 
   start: string,
   delete: string,
+  help: string,
 }
