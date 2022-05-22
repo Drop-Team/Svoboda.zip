@@ -15,7 +15,7 @@ interface DashboardProps {
 }
 
 export const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
-  const [zipps, updateZipps] = useFetch<Zipps>("http://10.91.10.20:8000/zipps/");
+  const [zipps, updateZipps] = useFetch<Zipps>("http://localhost:8000/zipps/");
   
   const [helpPage, setHelpPage] = useState<HelpPageType>({
     opened: false,
