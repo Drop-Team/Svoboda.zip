@@ -6,7 +6,6 @@ from multiprocessing import Process
 from os import path
 import shutil
 import zipfile
-from io import BytesIO
 
 import markdown as markdown
 
@@ -84,19 +83,12 @@ class Utils:
             raise NoSuchZippError(zipp_dir)
 
     def add_local_zipp(self, zipp_bytes: bytes):
-        # zipp_name = (zipp_path.split('/'))[-1].split('.')[0]
-        user_zip_list = self.get_zipps_list()
-
-        # Check if this zipp package already exists
-        # if zipp_name not in user_zip_list:
-        if True:
-            # Extract to zipp directory
-            # with io.BytesIO(zipp_bytes) as zip_ref:
+        try:
             with zipfile.ZipFile(io.BytesIO(zipp_bytes), 'r') as zip_ref:
                 zip_ref.extractall(self.zipp_dir)
             # pass
-        else:
-            raise ZippConflictError(zipp_name)
+        except Exception as e:
+            raise ZippConflictError("[Zipp archive]")
 
     def add_net_zipp(self, zipp_name):
 
