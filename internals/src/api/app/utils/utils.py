@@ -31,7 +31,10 @@ class Utils:
         # Get only folders
         for name in os.listdir(self.zipp_dir):
             if path.isdir(path.join(self.zipp_dir, name)):
-                zipp_list.append(self.get_zipp_data(name))
+                try:
+                    zipp_list.append(self.get_zipp_data(name))
+                except Exception as e:
+                    pass
         return zipp_list
 
     def get_zipp_data(self, zipp_dir) -> dict:
