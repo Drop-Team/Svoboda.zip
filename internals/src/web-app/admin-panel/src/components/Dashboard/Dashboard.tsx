@@ -6,6 +6,7 @@ import useFetch from "@hooks/useFetch";
 
 import React, {useCallback, useEffect, useReducer, useState} from "react";
 import styles from './Dashboard.module.scss';
+import {HelpPage} from "@components/HelpPage";
 
 
 interface DashboardProps {}
@@ -13,6 +14,11 @@ interface DashboardProps {}
 export const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
 
   const [zipps, updateZipps] = useFetch<Zipps>("http://10.91.10.20:8000/zipps/");
+  const [helpPage, setHelpPage] = useState<HelpPageType>({
+    opened: false,
+    linkToContent: null,
+    title: null,
+  });
 
   const zippCards:JSX.Element[] = [];
   if (zipps !== null) {
@@ -42,6 +48,14 @@ export const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
               });
       }
 
+      const helpCallback = () => {
+        setHelpPage({
+          opened: true,
+          linkToContent: item.help,
+          title: item.name + " - Справка по ZIPP",
+        });
+      }
+
       zippCards.push(
           <ZippCard key={index}
                     zippName={item.name}
@@ -52,7 +66,8 @@ export const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
                     zippSize={item.size}
 
                     zippStartCallback={startCallback}
-                    zippDeleteCallback={deleteCallback}/>
+                    zippDeleteCallback={deleteCallback}
+                    zippHelpCallback={helpCallback}/>
       );
     });
   } else {
@@ -60,6 +75,18 @@ export const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
         <h1 key={0}>Лоадинг</h1>
     );
   }
+
+  const closeCallback = () => {
+    setHelpPage({
+      opened: false,
+      linkToContent: null,
+      title: null,
+    });
+  }
+  const helpPageJSX = <HelpPage opened={helpPage.opened}
+                                linkToContent={helpPage.linkToContent}
+                                closeCallback={closeCallback}
+                                title={helpPage.title}/>;
 
   return <div className={styles["dashboard"]}>
     <div className={styles["header"]}>
@@ -72,6 +99,8 @@ export const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
         <button className={styles["button"]}>Остановить</button>
       </div>
     </div>
+
+    { helpPageJSX }
 
     <div className={styles["content"]}>
       <TextField placeholder="Hello" type="wide"/>
@@ -100,4 +129,11 @@ type Zipp = {
 
   start: string,
   delete: string,
+  help: string,
+}
+
+type HelpPageType = {
+  opened: boolean,
+  linkToContent: string | null,
+  title: string | null,
 }
