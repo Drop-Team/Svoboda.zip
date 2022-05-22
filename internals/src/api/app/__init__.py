@@ -3,6 +3,7 @@ from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 
+from .utils.utils import add_local_zipp
 from .utils.utils import Utils
 from .utils.func import get_config_data
 
@@ -11,6 +12,7 @@ web_app = FastAPI()
 
 
 def start():
+    add_local_zipp('qdqw', "C:/Projects/Programming/Svoboda.zip/internals/src/api/run.zip")
     web_app.mount("/zipps_static", StaticFiles(directory=Utils().zipp_dir), name="zipps")
 
     web_app.add_middleware(

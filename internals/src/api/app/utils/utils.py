@@ -4,6 +4,7 @@ import time
 from multiprocessing import Process
 from os import path
 import shutil
+import zipfile
 
 from .errors import *
 from .func import *
@@ -70,14 +71,25 @@ class Utils:
             raise NoSuchZippError(zipp_directory)
 
 
-    def add_zipp(self, zipp_directory):
-        # Check if this zipp package already exists
+    def add_local_zipp(self, zipp_path):
+        zipp_name = (zipp_path.split('/'))[-1].split('.')[0]
         user_zip_list = self.get_zipps_list()
-        if zipp_directory not in user_zip_list:
-            # Loading Zipp package....
+
+        # Check if this zipp package already exists
+        if zipp_name not in user_zip_list:
+            # Extract to zipp directory
+            with zipfile.ZipFile(zipp_path, 'r') as zip_ref:
+                zip_ref.extractall(self.zipp_dir)
             pass
         else:
-            raise ZippConflictError(zipp_directory)
+            raise ZippConflictError(zipp_name)
+
+
+    def add_net_zipp(self, zipp_name):
+
+        # Load zipp from net
+
+        pass
 
 
     def restart_app(self):
@@ -90,4 +102,3 @@ class Utils:
 
         except Exception as e:
             raise CorruptedFileError('run.py', e)
-
