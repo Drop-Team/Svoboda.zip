@@ -1,0 +1,65 @@
+@import "~styles/fonts";
+
+.helpPage {
+
+  @include main-font;
+
+  text-align: start;
+
+  margin: 0;
+
+  position: absolute;
+
+  left: 0;
+  top: 0;
+
+  width: 100%;
+  min-height: 100vh;
+
+  background: rgba(0, 0, 0, 0.2);
+
+  overflow-x: scroll;
+  overflow-y: hidden;
+
+  transition: all .1s;
+
+  .content {
+
+    border-radius: 10px;
+    border: 0;
+
+    width: 100%;
+    background: #FFFFFF;
+
+    margin-top: 50vh;
+    min-height: 100vh;
+
+    box-sizing: border-box;
+
+    padding: 128px 128px 128px 128px;
+
+    transition: all .1s;
+  }
+
+  .close-button {
+    position: fixed;
+
+    top: 128px;
+    left: 64px;
+
+    cursor: pointer;
+
+    border: none;
+    background: transparent;
+  }
+
+  h1 {
+
+  }
+  p {
+
+  }
+}
+.hidden {
+  display: none;
+}

@@ -9,6 +9,5 @@ interface AppProps {
 export const App: React.FunctionComponent<AppProps> = (props) => {
   return (<div className={styles["App"]}>
     <Dashboard />
-
   </div>);
 }

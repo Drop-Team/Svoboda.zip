@@ -1,21 +1,30 @@
 import { SvobodaZipLogo } from "@components/SvobodaZipLogo";
 import { TextField } from "@components/TextField";
+import { UploadDropZone } from "@components/UploadDropZone";
 import { ZippCard } from "@components/ZippCard";
-import useFetch from "@hooks/useFetch";
+import { useFetchZipps } from "@hooks/useFetchZipps";
+import { Zipp, Zipps } from "@typings/index";
 
 import React, {useCallback, useEffect, useReducer, useState} from "react";
 import styles from './Dashboard.module.scss';
+import { HelpPage } from "@components/HelpPage";
+import useFetch from "@hooks/useFetch";
 
+interface DashboardProps {
 
-interface DashboardProps {}
+}
 
 export const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
-
-  const [zipps, updateZipps] = useFetch<Zipps>("http://10.91.10.20:8000/zipps/");
+  const [zipps, updateZipps] = useFetch<Zipps>("http://localhost:8000/zipps/");
+  
+  const [helpPage, setHelpPage] = useState<HelpPageType>({
+    opened: false,
+    linkToContent: null,
+    title: null,
+  });
 
   const zippCards:JSX.Element[] = [];
-  if (zipps !== null) {
-
+  if (zipps) {
     zipps.zipps.forEach((item, index) => {
 
       const startCallback = () => {
@@ -41,6 +50,14 @@ export const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
               });
       }
 
+      const helpCallback = () => {
+        setHelpPage({
+          opened: true,
+          linkToContent: item.help,
+          title: item.name + " - Справка по ZIPP",
+        });
+      }
+
       zippCards.push(
           <ZippCard key={index}
                     zippName={item.name}
@@ -51,7 +68,8 @@ export const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
                     zippSize={item.size}
 
                     zippStartCallback={startCallback}
-                    zippDeleteCallback={deleteCallback}/>
+                    zippDeleteCallback={deleteCallback}
+                    zippHelpCallback={helpCallback}/>
       );
     });
   } else {
@@ -59,6 +77,18 @@ export const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
         <h1 key={0}>Лоадинг</h1>
     );
   }
+
+  const closeCallback = () => {
+    setHelpPage({
+      opened: false,
+      linkToContent: null,
+      title: null,
+    });
+  }
+  const helpPageJSX = <HelpPage opened={helpPage.opened}
+                                linkToContent={helpPage.linkToContent}
+                                closeCallback={closeCallback}
+                                title={helpPage.title}/>;
 
   return <div className={styles["dashboard"]}>
     <div className={styles["header"]}>
@@ -72,8 +102,12 @@ export const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
       </div>
     </div>
 
+    { helpPageJSX }
+
     <div className={styles["content"]}>
       <TextField placeholder="Hello" type="wide"/>
+
+      <UploadDropZone onUploadSuccess={ updateZipps }/>
 
       <div className={styles["zipp-cards-list"]}>
         { zippCards }
@@ -82,19 +116,8 @@ export const Dashboard: React.FunctionComponent<DashboardProps> = (props) => {
   </div>;
 }
 
-type Zipps = {
-  zipps: Zipp[],
-}
-
-type Zipp = {
-  name: string,
-  description: string,
-  type: string,
-  version: string,
-  icon: string,
-  size: string,
-  directory_name: string,
-
-  start: string,
-  delete: string,
+type HelpPageType = {
+  opened: boolean,
+  linkToContent: string | null,
+  title: string | null,
 }

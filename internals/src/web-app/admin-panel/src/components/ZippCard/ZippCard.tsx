@@ -12,6 +12,7 @@ interface ZippCardProps {
 
     zippStartCallback: CallableFunction;
     zippDeleteCallback: CallableFunction;
+    zippHelpCallback: CallableFunction;
 }
 
 export const ZippCard: React.FunctionComponent<ZippCardProps> = (props) => {
@@ -36,7 +37,7 @@ export const ZippCard: React.FunctionComponent<ZippCardProps> = (props) => {
       <div className={styles["controls"]}>
           <PrimitiveYegorsBullshitCodeButton callback={props.zippStartCallback} text="Start" type="wide" />
           <PrimitiveYegorsBullshitCodeButton callback={props.zippDeleteCallback} text="D" type="normal" />
-          <PrimitiveYegorsBullshitCodeButton callback={props.zippStartCallback} text="?" type="normal" />
+          <PrimitiveYegorsBullshitCodeButton callback={props.zippHelpCallback} text="?" type="normal" />
       </div>
 
       <div className={styles["info"]}>

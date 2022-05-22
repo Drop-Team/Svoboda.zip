@@ -40,7 +40,7 @@
 
     .img {
       width: 100%;
-
+      place-self: start center;
     }
   }
 
@@ -64,17 +64,18 @@
     grid-area: T;
 
     text-align: end;
-    place-self: center;
+    place-self: center end;
   }
 
   .description {
     grid-area: D;
     font-weight: 300;
+    text-align: left;
   }
 
   .controls {
     grid-area: C;
-    place-self: center;
+    place-self: end start;
 
     display: flex;
     gap: 8px;
@@ -82,7 +83,7 @@
 
   .info {
     grid-area: I;
-    place-self: center;
+    place-self: center end;
   }
 }
 .zipp-card:hover {
