@@ -1,3 +1,4 @@
+import signal
 import subprocess
 import sys
 import time
@@ -17,6 +18,7 @@ class Utils:
         self.root = get_root_dir()
         self.zipp_dir = path.join(self.root, 'zipps')
         self.wiki_dir = path.join(self.root, 'wiki')
+        self.active_apps = {}
 
         # Check structure consistency
         if not path.exists(self.zipp_dir):
@@ -72,11 +74,25 @@ class Utils:
 
             # Safe execute start.sh script
             try:
-                subprocess.Popen(start_file_path, shell=True, cwd=user_zipp_dir, start_new_session=True)
+                process = subprocess.Popen(start_file_path, shell=True, cwd=user_zipp_dir, start_new_session=True)
+                self.active_apps[zipp_dir] = process
+
             except Exception as e:
                 raise CorruptedZippError(start_file_path)
         else:
             raise NoSuchZippError(zipp_dir)
+
+
+    def stop_zipp(self, zipp_dir):
+        try:
+            # Fully terminate process if it exists
+            process = self.active_apps[zipp_dir]
+            os.killpg(os.getpgid(process.pid), signal.SIGTERM)
+            self.active_apps.pop(zipp_dir)
+
+        except Exception:
+            pass
+
 
 
     def delete_zipp(self, zipp_dir):
