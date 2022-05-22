@@ -4,6 +4,9 @@ import time
 from multiprocessing import Process
 from os import path
 import shutil
+import zipfile
+
+import markdown as markdown
 
 from .errors import *
 from .func import *
@@ -31,24 +34,39 @@ class Utils:
         return zipp_list
 
 
-    def get_zipp_data(self, zipp_directory) -> dict:
-        with open(path.join(self.zipp_dir, zipp_directory, "manifest.json")) as f:
+    def get_zipp_data(self, zipp_dir) -> dict:
+        with open(path.join(self.zipp_dir, zipp_dir, "manifest.json")) as f:
             data = json.load(f)
         result = {
             "name": data.get("name"),
             "description": data.get("description"),
             "type": data.get("type"),
             "version": data.get("version"),
-            "icon": zipp_directory + "/" + data.get("icon"),
-            "size": get_human_readable_size(path.join(self.zipp_dir, zipp_directory)),
-            "directory_name": zipp_directory
+            "icon": zipp_dir + "/" + data.get("icon"),
+            "size": get_human_readable_size(path.join(self.zipp_dir, zipp_dir)),
+            "directory_name": zipp_dir
         }
         return result
 
 
-    def start_zipp(self, zipp_directory):
+    def get_zipp_markdown(self, zipp_dir):
+        md_path = path.join(self.zipp_dir, zipp_dir, "help.md")
+        md_html = ''
+        # Convert md to html
+        try:
+            markdown.markdownFromFile(
+                input=md_path,
+                output=md_html,
+                encoding='utf8',
+            )
+            return md_html
+        except Exception:
+            raise FileConsistencyError(md_path)
+
+
+    def start_zipp(self, zipp_dir):
         # Check if zipp package exists
-        user_zipp_dir = path.join(self.zipp_dir, zipp_directory)
+        user_zipp_dir = path.join(self.zipp_dir, zipp_dir)
         if path.exists(user_zipp_dir):
             start_file_path = path.join(user_zipp_dir, "start.sh")
 
@@ -58,26 +76,38 @@ class Utils:
             except Exception as e:
                 raise CorruptedZippError(start_file_path)
         else:
-            raise NoSuchZippError(zipp_directory)
+            raise NoSuchZippError(zipp_dir)
 
 
-    def delete_zipp(self, zipp_directory):
+    def delete_zipp(self, zipp_dir):
         # Check if zipp package exists
-        user_zipp_dir = path.join(self.zipp_dir, zipp_directory)
+        user_zipp_dir = path.join(self.zipp_dir, zipp_dir)
         if path.exists(user_zipp_dir):
             shutil.rmtree(user_zipp_dir)
         else:
-            raise NoSuchZippError(zipp_directory)
+            raise NoSuchZippError(zipp_dir)
 
 
-    def add_zipp(self, zipp_directory):
-        # Check if this zipp package already exists
+    def add_local_zipp(self, zipp_path):
+        zipp_name = (zipp_path.split('/'))[-1].split('.')[0]
         user_zip_list = self.get_zipps_list()
-        if zipp_directory not in user_zip_list:
-            # Loading Zipp package....
+
+        # Check if this zipp package already exists
+        if zipp_name not in user_zip_list:
+            # Extract to zipp directory
+            with zipfile.ZipFile(zipp_path, 'r') as zip_ref:
+                zip_ref.extractall(self.zipp_dir)
             pass
         else:
-            raise ZippConflictError(zipp_directory)
+            raise ZippConflictError(zipp_name)
+
+
+    def add_net_zipp(self, zipp_name):
+
+        # Download zipp from net
+        # Then, add it as local one
+
+        pass
 
 
     def restart_app(self):
@@ -90,4 +120,3 @@ class Utils:
 
         except Exception as e:
             raise CorruptedFileError('run.py', e)
-
